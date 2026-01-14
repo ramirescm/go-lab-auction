@@ -1,0 +1,69 @@
+### Configurações de Variáveis
+@baseUrl = http://localhost:8080
+@auctionId = 64d1f2e3a5b6c7d8e9f01234
+@userId = 123
+
+#################################################
+### RECURSOS DE LEILÃO (AUCTION)
+#################################################
+
+### Criar um Novo Leilão
+# Condition: 0=New, 1=Used, 2=Refurbished
+POST {{baseUrl}}/auction
+Content-Type: application/json
+
+{
+    "product_name": "Macbook Pro M2",
+    "category": "Electronics",
+    "description": "Powerful laptop for developers with 16GB RAM and 512GB SSD.",
+    "condition": 0
+}
+
+---
+
+### Listar Leilões (Com filtros opcionais)
+GET {{baseUrl}}/auction?status=0&category=Electronics&productName=Macbook
+Content-Type: application/json
+
+---
+
+### Buscar Leilão por ID
+GET {{baseUrl}}/auction/{{auctionId}}
+Content-Type: application/json
+
+---
+
+### Buscar Ganhador do Leilão
+GET {{baseUrl}}/auction/winner/{{auctionId}}
+Content-Type: application/json
+
+
+#################################################
+### RECURSOS DE LANCES (BID)
+#################################################
+
+### Criar um Novo Lance
+# Lembre-se: O lance deve ser maior que o anterior e o leilão deve estar aberto
+POST {{baseUrl}}/bid
+Content-Type: application/json
+
+{
+    "user_id": "{{userId}}",
+    "auction_id": "{{auctionId}}",
+    "amount": 1500.50
+}
+
+---
+
+### Buscar Lances de um Leilão Específico
+GET {{baseUrl}}/bid/{{auctionId}}
+Content-Type: application/json
+
+
+#################################################
+### RECURSOS DE USUÁRIO (USER)
+#################################################
+
+### Buscar Usuário por ID
+GET {{baseUrl}}/user/{{userId}}
+Content-Type: application/json
